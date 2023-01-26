@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController playerControllerScript; //to access this script in other scripts 
+
     public float moveSpeed = 10f; //movement speed handler of the player
     public float jumpSpeed = 10f; //jump scale handler of the player
     public float moveSpeedAxis; //to be referenced for the horizontal input axis of the input manager
@@ -26,6 +28,11 @@ public class PlayerController : MonoBehaviour
         playerAnimator = this.GetComponent<Animator>(); //assigning the player animator 
         playerSpriteRenderer = this.GetComponent<SpriteRenderer>(); //assigning the player sprite renderer
         
+        //assigning the player controller script to be referenced in other scripts if its not assigned earlier
+        if (playerControllerScript == null)
+        {
+            playerControllerScript = this;
+        }
     }
 
     private void FixedUpdate()
