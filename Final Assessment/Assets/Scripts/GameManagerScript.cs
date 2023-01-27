@@ -11,7 +11,7 @@ public class GameManagerScript : MonoBehaviour
 
     public int scoreValue; //to be referenced to the player score value
 
-    // Start is called before the first frame update
+    // Awake is called before the start of the game
     void Awake()
     {
         currentHealth = maxHealth; //resetting the health value of the player
@@ -22,12 +22,23 @@ public class GameManagerScript : MonoBehaviour
         {
             thisGameManagerScript = this;
         }
+
+        
+    }
+
+    // Start is called before the Update of the first frame of the game
+    private void Start()
+    {
+        Time.timeScale = 1; //resetting the timescale of the game
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentHealth == 0)
+        {
+            PlayerController.playerControllerScript.PlayerDead();
+        }
     }
 
     //function to deal damage to the player

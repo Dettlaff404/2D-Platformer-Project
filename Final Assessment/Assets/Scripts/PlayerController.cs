@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimator; //variable to reference the animator component in the player gameobject
     private SpriteRenderer playerSpriteRenderer; //variable to reference the sprite renderer component in the player gameobject
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,4 +95,24 @@ public class PlayerController : MonoBehaviour
     {
         
     }
+
+    //player dying function
+    public void PlayerDead()
+    {
+        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerDying"))
+        {
+            //triggering player dying animation
+            playerAnimator.SetTrigger("isDead");
+
+            //Invoking the UI callers after playing the player dead animation
+            Invoke("PlayerDeadUI", 2f);
+        }       
+    }
+
+    //function for showing the UI screen after player dying
+    private void PlayerDeadUI()
+    {
+        //pausing the time flow of the game
+        Time.timeScale = 0;
+    } 
 }
