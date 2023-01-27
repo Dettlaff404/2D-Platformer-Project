@@ -21,6 +21,12 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimator; //variable to reference the animator component in the player gameobject
     private SpriteRenderer playerSpriteRenderer; //variable to reference the sprite renderer component in the player gameobject
 
+    public GameObject kunaiPrefab;
+    public Transform kunaiSpawnLocationR;
+    public Transform kunaiSpawnLocationL;
+    private float reloadTime = 0.5f;
+    public float timer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +40,8 @@ public class PlayerController : MonoBehaviour
         {
             playerControllerScript = this;
         }
+
+        timer = reloadTime; //setting the reload time 
     }
 
     private void FixedUpdate()
@@ -65,13 +73,35 @@ public class PlayerController : MonoBehaviour
         //setting the boolean value of the Attack parameter in the animator to call the attacking animation
         playerAnimator.SetBool("Attack", attack);
 
+        //countdown timer to trigger in between time between attacks 
+        if (timer > 0)
+        {
+            timer -= 1 * Time.deltaTime;
+        }
+        else if (timer < 0)
+        {
+            timer = 0;
+        }
+       
+
         //if player hits the fire1 input button in the input manager
         if (Input.GetAxis("Fire1") > 0)
         {
-            //set the value of the bool attack to true
-            attack = true;
             //stopping the player from moving
             thisChar.velocity = Vector2.zero;
+
+            if (timer == 0)
+            {
+                //set the value of the bool attack to true
+                attack = true;
+
+                //resetting reload time countdown
+                timer = reloadTime;
+
+                Invoke("KunaiAttack", 0.2f);
+                
+            }
+            
         }
         else
         {
@@ -115,4 +145,22 @@ public class PlayerController : MonoBehaviour
         //pausing the time flow of the game
         Time.timeScale = 0;
     } 
+
+    private void KunaiAttack()
+    {
+        if (playerSpriteRenderer.flipX == false)
+        {
+            GameObject kunaiInstance = (GameObject)Instantiate(kunaiPrefab, kunaiSpawnLocationR);
+            kunaiInstance.GetComponent<SpriteRenderer>().flipY = false;
+            Destroy(kunaiInstance.gameObject, 1f);
+        }
+        else if (playerSpriteRenderer.flipX == true)
+        {
+            GameObject kunaiInstance = (GameObject)Instantiate(kunaiPrefab, kunaiSpawnLocationL);
+            kunaiInstance.GetComponent<SpriteRenderer>().flipY = true;
+            Destroy(kunaiInstance.gameObject, 1f);
+        }
+
+       
+    }
 }
