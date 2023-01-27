@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
                 //resetting reload time countdown
                 timer = reloadTime;
 
+                //Calling Kunai Attack Function after 0.2s
                 Invoke("KunaiAttack", 0.2f);
                 
             }
@@ -146,18 +147,25 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0;
     } 
 
+    //function to deploy Kunais
     private void KunaiAttack()
     {
+        //if the player is facing right
         if (playerSpriteRenderer.flipX == false)
         {
+            //deploy kunai in the direction of the player facing
             GameObject kunaiInstance = (GameObject)Instantiate(kunaiPrefab, kunaiSpawnLocationR);
             kunaiInstance.GetComponent<SpriteRenderer>().flipY = false;
+            //destroy the instance after 1s
             Destroy(kunaiInstance.gameObject, 1f);
         }
+        //if the player is facing left
         else if (playerSpriteRenderer.flipX == true)
         {
+            //deploy kunai in the direction of the player facing
             GameObject kunaiInstance = (GameObject)Instantiate(kunaiPrefab, kunaiSpawnLocationL);
             kunaiInstance.GetComponent<SpriteRenderer>().flipY = true;
+            //destroy the instance after 1s
             Destroy(kunaiInstance.gameObject, 1f);
         }
 
