@@ -6,11 +6,11 @@ public class GameManagerScript : MonoBehaviour
 {
     public static GameManagerScript thisGameManagerScript; //to access this script in other scripts
 
-    public int maxHealth = 100; //maximum health value of the player
-    public int currentHealth; //current health value of the player
+    public float maxHealth = 100; //maximum health value of the player
+    public float currentHealth; //current health value of the player
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentHealth = maxHealth; //resetting the health value of the player
 
@@ -28,7 +28,7 @@ public class GameManagerScript : MonoBehaviour
     }
 
     //function to deal damage to the player
-    public void DealDamage(int amountOfDamage)
+    public void DealDamage(float amountOfDamage)
     {
         //reducing the current health value of the player by the amount of damage recieved
         currentHealth = currentHealth - amountOfDamage;
