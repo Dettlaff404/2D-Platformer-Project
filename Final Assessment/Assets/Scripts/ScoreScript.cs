@@ -18,6 +18,7 @@ public class ScoreScript : MonoBehaviour
     void Update()
     {
         //setting the text of the UI to display the score value
-        score.text = "Score: " + GameManagerScript.thisGameManagerScript.scoreValue;
+        string text = "Score: " + GameManagerScript.thisGameManagerScript.scoreValue;
+        score.text = text;
     }
 }
