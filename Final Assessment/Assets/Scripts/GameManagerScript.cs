@@ -9,10 +9,13 @@ public class GameManagerScript : MonoBehaviour
     public float maxHealth = 100; //maximum health value of the player
     public float currentHealth; //current health value of the player
 
+    public int scoreValue; //to be referenced to the player score value
+
     // Start is called before the first frame update
     void Awake()
     {
         currentHealth = maxHealth; //resetting the health value of the player
+        scoreValue = 0; //resetting the player score value
 
         //assigning the game manager script to be referenced in other scripts if its not assigned earlier
         if (thisGameManagerScript == null)
