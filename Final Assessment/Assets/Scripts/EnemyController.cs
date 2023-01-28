@@ -12,14 +12,17 @@ public class EnemyController : MonoBehaviour
     public bool moveRight = true; //boolian value to keep track of the direction that the enemy will be moving to
 
     public SpriteRenderer enemySprite; //sprite renderer component of the enemy
+    private Animator enemyAniController; //animation controller component of the enemy
 
     public float enemyMaxHealth = 100f; //enemy max health value
-    public float enemyCurrentHealth;
+    public float enemyCurrentHealth; //enemy current health value
 
 
     // Start is called before the first frame update
     void Start()
     {
+        enemyAniController = this.GetComponent<Animator>(); //assigning the animator component
+
         //recording the starting position of the enemy for later conditions
         startPos = transform.position.x;
 
@@ -36,30 +39,59 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //move the enemy right if move right value is true
-        if (moveRight == true)
+        //if the idle walking animation is playing
+        if (enemyAniController.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
         {
-            transform.Translate(Vector2.right * Time.deltaTime * enemyMoveSpeed);
-
-            //if the enemy pass a certain distance (distance value of starting position + units to move value) then make the enemy flip and turn the move right value to false
-            if (transform.position.x >= (startPos + unitsToMove))
+            //move the enemy right if move right value is true
+            if (moveRight == true)
             {
-                moveRight = false;
-                enemySprite.flipX = true;
+                transform.Translate(Vector2.right * Time.deltaTime * enemyMoveSpeed);
+
+                //if the enemy pass a certain distance (distance value of starting position + units to move value) then make the enemy flip and turn the move right value to false
+                if (transform.position.x >= (startPos + unitsToMove))
+                {
+                    moveRight = false;
+                    enemySprite.flipX = true;
+                }
+            }
+            //if the move right value is not true make the enemy move left
+            else
+            {
+                transform.Translate(Vector2.left * Time.deltaTime * enemyMoveSpeed);
+
+                //if the enemy pass the starting position, make him turn around and assign move right value to true
+                if (transform.position.x <= startPos)
+                {
+                    moveRight = true;
+                    enemySprite.flipX = false;
+                }
+            }
+
+            //if enemy health is less than or equals to 0
+            if (enemyCurrentHealth <= 0)
+            {
+                //playing the enemy dying animation
+                enemyAniController.SetTrigger("EnemyDie");
+                //destroy this game object after 1s
+                Destroy(this.gameObject, 1f);
             }
         }
-        //if the move right value is not true make the enemy move left
-        else
-        {
-            transform.Translate(Vector2.left * Time.deltaTime * enemyMoveSpeed);
-
-            //if the enemy pass the starting position, make him turn around and assign move right value to true
-            if (transform.position.x <= startPos)
-            {
-                moveRight = true;
-                enemySprite.flipX = false;
-            }
-        }
-
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            enemyAniController.SetBool("EnemyAttack", true);
+
+            Invoke("AttackReset", 0.5f);
+        }
+    }
+
+    private void AttackReset()
+    {
+        enemyAniController.SetBool("EnemyAttack", false);
+    }
+
+
 }
