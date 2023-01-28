@@ -17,6 +17,13 @@ public class EnemyController : MonoBehaviour
     public float enemyMaxHealth = 100f; //enemy max health value
     public float enemyCurrentHealth; //enemy current health value
 
+    public float enemyDamage = 20f; //enemy damage value
+    private bool isAttack = false; //boolian to check the attacking state of the enemy
+
+    private float attackReset = 0.7f; //attack countdown timer reset value
+    private float enemyAttackCD; //attack countdown timer
+    private bool directionChanged = false; //boolian to check whether the sprite direction has changed while triggering the attack animation
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +44,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //if the idle walking animation is playing
         if (enemyAniController.GetCurrentAnimatorStateInfo(0).IsTag("idle"))
@@ -74,24 +81,84 @@ public class EnemyController : MonoBehaviour
                 enemyAniController.SetTrigger("EnemyDie");
                 //destroy this game object after 1s
                 Destroy(this.gameObject, 1f);
+            }  
+        }
+
+        //if enemy is attacking
+        if (isAttack)
+        {
+            //run the attack countdown timer 
+            if (enemyAttackCD > 0)
+            {
+                enemyAttackCD -= 1 * Time.deltaTime;
+            }
+            else
+            {
+                enemyAttackCD = 0;
+            }
+
+            //if the countdown timer ran out make the enemy deal damage to the player and reset the timer
+            if (enemyAttackCD == 0)
+            {
+                GameManagerScript.thisGameManagerScript.currentHealth -= enemyDamage;
+                enemyAttackCD = attackReset;
             }
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    //function that triggers when something enters inside the collider trigger
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if the object enters the collider is the player
         if (collision.CompareTag("Player"))
         {
+            //loop enemy attack animation
             enemyAniController.SetBool("EnemyAttack", true);
+            //reset the enemy attack countdown
+            enemyAttackCD = attackReset;
+            //set enemy as attacking to be referenced easily
+            isAttack = true;
 
-            Invoke("AttackReset", 0.5f);
+            //flipping the enemy sprite to face in the direction of the player position
+            if ((collision.transform.position.x > this.transform.position.x) && (enemySprite.flipX == true))
+            {
+                enemySprite.flipX = false;
+                directionChanged = true;
+            }
+            else if ((collision.transform.position.x < this.transform.position.x) && (enemySprite.flipX == false))
+            {
+                enemySprite.flipX = true;
+                directionChanged = true;
+            }
         }
     }
 
-    private void AttackReset()
+
+
+    //function that triggers when something exit out of the collider trigger
+    private void OnTriggerExit2D(Collider2D other)
     {
-        enemyAniController.SetBool("EnemyAttack", false);
+        if (other.CompareTag("Player"))
+        {
+            //stopping the enemy attack animation
+            enemyAniController.SetBool("EnemyAttack", false);
+            //set enemy as not attacking to be referenced easily
+            isAttack = false;
+
+            //if the enemy sprite direction was altered before make if back to how it was before
+            if (directionChanged)
+            {
+                directionChanged = false;
+
+                if (enemySprite.flipX)
+                {
+                    enemySprite.flipX = false;
+                }
+                else
+                {
+                    enemySprite.flipX = true;
+                }
+            }
+        }
     }
-
-
 }
