@@ -5,6 +5,7 @@ using UnityEngine;
 public class KunaiController : MonoBehaviour
 {
     public float kunaiSpeed; //speed in which kunai will be moving 
+    public float kunaiDamage; //kunai damage amount
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,15 @@ public class KunaiController : MonoBehaviour
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(-kunaiSpeed, 0);
         }
          
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.GetComponent<EnemyController>().enemyCurrentHealth -= kunaiDamage;
+            Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame
