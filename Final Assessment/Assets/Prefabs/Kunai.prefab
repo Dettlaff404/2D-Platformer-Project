@@ -147,3 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kunaiSpeed: 10
+  kunaiDamage: 40
