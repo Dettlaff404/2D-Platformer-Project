@@ -35,22 +35,10 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
         {
             PlayerController.playerControllerScript.PlayerDead();
         }
     }
 
-    //function to deal damage to the player
-    public void DealDamage(float amountOfDamage)
-    {
-        //reducing the current health value of the player by the amount of damage recieved
-        currentHealth = currentHealth - amountOfDamage;
-
-        //making the lowest posible number that the current value could have 0
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
-    }
 }
