@@ -16,4 +16,9 @@ public class UIScreens : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
 }
