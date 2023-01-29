@@ -49,4 +49,9 @@ public class UIScreens : MonoBehaviour
             Debug.Log("Save data not found");
         }
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
 }
