@@ -15,6 +15,7 @@ public class UIScreens : MonoBehaviour
     public void QuitApplication()
     {
         Application.Quit();
+        Debug.Log("Quit Game");
     }
 
     //function to load the main menu
