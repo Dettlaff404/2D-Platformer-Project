@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
 
     public SpriteRenderer enemySprite; //sprite renderer component of the enemy
     private Animator enemyAniController; //animation controller component of the enemy
+    public int killScore = 100; //score value a player would get for killing an enemy
 
     public float enemyMaxHealth = 100f; //enemy max health value
     public float enemyCurrentHealth; //enemy current health value
@@ -81,6 +82,8 @@ public class EnemyController : MonoBehaviour
                 enemyAniController.SetTrigger("EnemyDie");
                 //destroy this game object after 1s
                 Destroy(this.gameObject, 1f);
+                //increasing the player score value
+                GameManagerScript.thisGameManagerScript.scoreValue += killScore;
             }  
         }
 
