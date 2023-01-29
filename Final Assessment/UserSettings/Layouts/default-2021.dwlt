@@ -591,8 +591,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scenes
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\ashan\Documents\ECU\Game Dev\Assignment 4\2D-Platformer-Project\Final
-    Assessment
+  m_LastProjectPath: D:\2D-Platformer-Project\Final Assessment
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
@@ -627,7 +626,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000006620000086200000a6200000c6200000e620000106200001262000014620000
+    m_ExpandedIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -654,7 +653,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 5672020000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1055,9 +1054,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.8458712, y: 0.16346757, z: -0.019815922}
+    m_Target: {x: 428.21185, y: 576.70544, z: 19.402304}
     speed: 2
-    m_Value: {x: -1.8458712, y: 0.16346757, z: -0.019815922}
+    m_Value: {x: 428.21185, y: 576.70544, z: 19.402304}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1099,7 +1098,7 @@ MonoBehaviour:
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 1, y: 0.0001}
+      m_Size: {x: 0.50001, y: 0.50001}
     m_ShowGrid: 1
     m_GridAxis: 1
     m_gridOpacity: 0.5
@@ -1108,9 +1107,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.3425336
+    m_Target: 535.1643
     speed: 2
-    m_Value: 3.3425336
+    m_Value: 535.1643
   m_Ortho:
     m_Target: 1
     speed: 2
