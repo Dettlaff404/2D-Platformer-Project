@@ -51,10 +51,20 @@ public class PlayerController : MonoBehaviour
         jumpSpeedAxis = Input.GetAxis("Jump");
 
         //make the player able to move only if PlayerAttack animation is not playing
-        if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerAttack"))
+        if (!(playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerAttack") || playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerDying")))
         {
             //adding velocity to the rigidbody component based on the horizontal move axis inputs
             thisChar.velocity = new Vector2(moveSpeedAxis * moveSpeed, thisChar.velocity.y);
+
+            //flipping the sprite renderer of the player correspending to the direction that the player is moving
+            if (moveSpeedAxis < 0 && playerSpriteRenderer.flipX == false)
+            {
+                playerSpriteRenderer.flipX = true;
+            }
+            else if (moveSpeedAxis > 0 && playerSpriteRenderer.flipX == true)
+            {
+                playerSpriteRenderer.flipX = false;
+            }
         }
 
         
@@ -110,15 +120,7 @@ public class PlayerController : MonoBehaviour
             attack = false;
         }
 
-        //flipping the sprite renderer of the player correspending to the direction that the player is moving
-        if (moveSpeedAxis < 0 && playerSpriteRenderer.flipX == false)
-        {
-            playerSpriteRenderer.flipX = true;
-        }
-        else if (moveSpeedAxis > 0 && playerSpriteRenderer.flipX == true)
-        {
-            playerSpriteRenderer.flipX = false;
-        }
+        
     }
 
     // Update is called once per frame
@@ -130,6 +132,7 @@ public class PlayerController : MonoBehaviour
     //player dying function
     public void PlayerDead()
     {
+        //if player dead animation is not currently playing
         if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerDying"))
         {
             //triggering player dying animation
@@ -137,7 +140,14 @@ public class PlayerController : MonoBehaviour
 
             //Invoking the UI callers after playing the player dead animation
             Invoke("PlayerDeadUI", 2f);
-        }       
+        }   
+        
+        //if player dead animation is playing
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerDying"))
+        {
+            //stopping the character from moving 
+            thisChar.velocity = Vector2.zero;
+        }
     }
 
     //function for showing the UI screen after player dying
