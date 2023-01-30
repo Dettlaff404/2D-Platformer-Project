@@ -110,9 +110,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
+<<<<<<< HEAD
   m_Script: {fileID: 12042, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: ProjectBrowser
+  m_EditorClassIdentifier:
+>>>>>>> 685140b683a0c276ee9c213d1359f978ed971724
   m_Children: []
   m_Position:
     serializedVersion: 2
@@ -162,7 +169,11 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1004
+=======
+    x: 941
+>>>>>>> 685140b683a0c276ee9c213d1359f978ed971724
     y: 0
     width: 276.80005
     height: 1146.8
@@ -759,6 +770,7 @@ MonoBehaviour:
     width: 1003
     height: 565.4
   m_ViewDataDictionary: {fileID: 0}
+<<<<<<< HEAD
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData:
@@ -1094,3 +1106,5 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
+=======
+>>>>>>> 685140b683a0c276ee9c213d1359f978ed971724
