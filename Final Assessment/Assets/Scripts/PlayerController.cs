@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
        
 
         //if player hits the fire1 input button in the input manager
-        if (Input.GetAxis("Fire1") > 0)
+        if (Input.GetAxis("Fire3") > 0)
         {
             //stopping the player from moving
             thisChar.velocity = Vector2.zero;

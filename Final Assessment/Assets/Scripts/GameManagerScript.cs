@@ -12,6 +12,13 @@ public class GameManagerScript : MonoBehaviour
 
     public int scoreValue; //to be referenced to the player score value
 
+    public GameObject pauseScreen; //pause UI screen
+    public GameObject youWinScreen; //win UI screen
+    public GameObject gameOverScreen; //game over UI screen
+    public GameObject pauseButton; //pause button in the UI
+    public GameObject playerScoreUI; //player score 
+    public bool isPaused; //to keep track if the game is paused
+
     // Awake is called before the start of the game
     void Awake()
     {
@@ -47,7 +54,14 @@ public class GameManagerScript : MonoBehaviour
         if (Time.timeScale == 0f)
         {
             Time.timeScale = 1f;
+            isPaused = false;
         }
+
+        //setting UI screens
+        pauseScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
+        youWinScreen.SetActive(false);
+        
 
     }
 
@@ -58,12 +72,53 @@ public class GameManagerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (currentHealth <= 0)
         {
             PlayerController.playerControllerScript.PlayerDead();
         }
+
+        //calling pause and resume function when the escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused == true)
+            {
+                Resume();
+            }
+            else if (isPaused == false)
+            {
+                Pause();
+            }
+        }
     }
 
+    //function to resume the game
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        pauseScreen.SetActive(false);
+        isPaused = false;
+    }
+
+    //function to pause the game
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        pauseScreen.SetActive(true);
+        isPaused = true;
+    }
+
+    //game over screen calling function
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverScreen.SetActive(true);
+    }
+
+    public void YouWin()
+    {
+        Time.timeScale = 0f;
+        youWinScreen.SetActive(true);
+    }
 }
