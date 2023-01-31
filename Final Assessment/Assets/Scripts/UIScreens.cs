@@ -49,4 +49,16 @@ public class UIScreens : MonoBehaviour
             Debug.Log("Save data not found");
         }
     }
+
+    //function to pause the game
+    public void PauseButton()
+    {
+        GameManagerScript.thisGameManagerScript.Pause();
+    }
+
+    //function to resume the game if paused
+    public void ResumeGame()
+    {
+        GameManagerScript.thisGameManagerScript.Resume();
+    }
 }
