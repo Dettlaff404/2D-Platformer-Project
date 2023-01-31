@@ -16,7 +16,8 @@ public class GameManagerScript : MonoBehaviour
     public GameObject youWinScreen; //win UI screen
     public GameObject gameOverScreen; //game over UI screen
     public GameObject pauseButton; //pause button in the UI
-    public GameObject playerScoreUI; //player score 
+    public GameObject playerScoreUI; //player score UI element
+    public GameObject playerHealthBar; //player health bar UI element
     public bool isPaused; //to keep track if the game is paused
 
     // Awake is called before the start of the game
@@ -61,6 +62,9 @@ public class GameManagerScript : MonoBehaviour
         pauseScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         youWinScreen.SetActive(false);
+        pauseButton.SetActive(true);
+        playerHealthBar.SetActive(true);
+        playerScoreUI.SetActive(true);
         
 
     }
@@ -74,9 +78,13 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if player current health reaches 0 or less
         if (currentHealth <= 0)
         {
+            //play the player dead animation
             PlayerController.playerControllerScript.PlayerDead();
+            //call game over menu screen after the end of player dead animation
+            Invoke("GameOver", 1.5f);
         }
 
         //calling pause and resume function when the escape key is pressed
@@ -98,6 +106,9 @@ public class GameManagerScript : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseScreen.SetActive(false);
+        pauseButton.SetActive(true);
+        playerHealthBar.SetActive(true);
+        playerScoreUI.SetActive(true);
         isPaused = false;
     }
 
@@ -106,6 +117,9 @@ public class GameManagerScript : MonoBehaviour
     {
         Time.timeScale = 0f;
         pauseScreen.SetActive(true);
+        pauseButton.SetActive(false);
+        playerHealthBar.SetActive(false);
+        playerScoreUI.SetActive(false);
         isPaused = true;
     }
 
@@ -114,11 +128,16 @@ public class GameManagerScript : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameOverScreen.SetActive(true);
+        pauseButton.SetActive(false);
+        playerHealthBar.SetActive(false);
     }
 
+    //player win game screen
     public void YouWin()
     {
         Time.timeScale = 0f;
         youWinScreen.SetActive(true);
+        pauseButton.SetActive(false);
+        playerHealthBar.SetActive(false);
     }
 }
