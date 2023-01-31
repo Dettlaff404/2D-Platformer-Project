@@ -137,9 +137,6 @@ public class PlayerController : MonoBehaviour
         {
             //triggering player dying animation
             playerAnimator.SetTrigger("isDead");
-
-            //Invoking the UI callers after playing the player dead animation
-            Invoke("PlayerDeadUI", 2f);
         }   
         
         //if player dead animation is playing
@@ -149,13 +146,6 @@ public class PlayerController : MonoBehaviour
             thisChar.velocity = Vector2.zero;
         }
     }
-
-    //function for showing the UI screen after player dying
-    private void PlayerDeadUI()
-    {
-        //pausing the time flow of the game
-        Time.timeScale = 0;
-    } 
 
     //function to deploy Kunais
     private void KunaiAttack()
