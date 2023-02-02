@@ -76,8 +76,14 @@ public class PlayerController : MonoBehaviour
             thisChar.AddForce(new Vector2(0, jumpSpeed));
         }
 
+        //transitioning back from the jumping animation to the idle when player is on ground
+        if (Physics2D.OverlapCircle(groundCheckObject.position, groundRadius, whatIsGround))
+        {
+            playerAnimator.SetTrigger("onGround");
+        }
+
         //setting the float value of the Movement parameter in the animator to call the running animation
-        playerAnimator.SetFloat("Movement", Mathf.Abs(moveSpeedAxis));
+            playerAnimator.SetFloat("Movement", Mathf.Abs(moveSpeedAxis));
         //setting the float value of the Jump parameter in the animator to call the Jumping animation
         playerAnimator.SetFloat("Jump", jumpSpeedAxis);
         //setting the boolean value of the Attack parameter in the animator to call the attacking animation
