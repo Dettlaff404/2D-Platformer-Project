@@ -7,6 +7,7 @@ public class EnemyHealthBar : MonoBehaviour
 {
     public Slider enemyHealthBarSlider;
     public Image enemyFillImage;
+    public EnemyController enemyScript;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,7 +32,7 @@ public class EnemyHealthBar : MonoBehaviour
         }
 
         //assigning the value to the slider component to show taking reference of the current health with the player max health from the GameManager script
-        float fillValue = EnemyController.enemyControllerScript.enemyCurrentHealth / EnemyController.enemyControllerScript.enemyMaxHealth;
+        float fillValue = enemyScript.enemyCurrentHealth / enemyScript.enemyMaxHealth;
         enemyHealthBarSlider.value = fillValue;
     }
 }
