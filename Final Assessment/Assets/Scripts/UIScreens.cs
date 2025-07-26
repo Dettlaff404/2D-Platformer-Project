@@ -42,7 +42,7 @@ public class UIScreens : MonoBehaviour
         {
             PlayerPrefs.SetInt("LoadTheData", 1);
             PlayerPrefs.Save();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(1);
         }
         else
         {

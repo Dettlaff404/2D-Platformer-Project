@@ -7,6 +7,8 @@ public class KunaiController : MonoBehaviour
     public float kunaiSpeed; //speed in which kunai will be moving 
     public float kunaiDamage; //kunai damage amount
 
+    [SerializeField] private AudioSource weaponHitSound; //kunai hitting sound 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +24,24 @@ public class KunaiController : MonoBehaviour
          
     }
 
+    //function when kunai hits with something
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        //if it hits with the player
+        if (collision.CompareTag("Enemy") && (this.GetComponent<SpriteRenderer>().enabled == true))
         {
+            //reduce enemy health and play the kunai hitting sound and then after playing the sound destroy this gameobject
             collision.GetComponent<EnemyController>().enemyCurrentHealth -= kunaiDamage;
+            weaponHitSound.Play();
+            this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            this.GetComponent<SpriteRenderer>().enabled = false;
+            Destroy(this.gameObject,1f);
+            
+        }
+        //else if it hits an obstacle on its path
+        else if (collision.CompareTag("Obstacle"))
+        {
+            //just destroy the kunai
             Destroy(this.gameObject);
         }
     }

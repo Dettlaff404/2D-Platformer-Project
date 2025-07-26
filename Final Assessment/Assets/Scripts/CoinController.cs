@@ -5,14 +5,22 @@ using UnityEngine;
 public class CoinController : MonoBehaviour
 {
 
-    public int coinScore = 50;
+    public int coinScore = 50; //coin score value
+   
+    [SerializeField] private AudioSource coinSound; //sound to play while picking up the coin 
 
+
+    //function to trigger if something collides with the gameObject 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        //if it collides with the player
+        if (collision.CompareTag("Player") && (this.GetComponent<SpriteRenderer>().enabled == true))
         {
-            GameManagerScript.thisGameManagerScript.scoreValue += 50;
-            Destroy(this.gameObject);
+            //add coinscore value to the player score, play the coin pickup sound and destroy the game object
+            GameManagerScript.thisGameManagerScript.scoreValue += coinScore;
+            coinSound.Play();
+            this.GetComponent<SpriteRenderer>().enabled = false;
+            Destroy(this.gameObject,1f);
         }
     }
 }

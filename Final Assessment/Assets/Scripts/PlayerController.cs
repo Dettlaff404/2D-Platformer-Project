@@ -21,12 +21,16 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimator; //variable to reference the animator component in the player gameobject
     private SpriteRenderer playerSpriteRenderer; //variable to reference the sprite renderer component in the player gameobject
 
-    public GameObject kunaiPrefab;
-    public Transform kunaiSpawnLocationR;
-    public Transform kunaiSpawnLocationL;
-    private float reloadTime = 0.5f;
-    public float timer;
+    public GameObject kunaiPrefab; //kunai prefab to spawn when attacking
+    public Transform kunaiSpawnLocationR; //kunai prefab location based on the direction player is looking at
+    public Transform kunaiSpawnLocationL; //kunai prefab location based on the direction player is looking at
+    private float reloadTime = 0.5f; //kunai reload time reset value
+    public float timer; //timer countdown
 
+    [SerializeField] private AudioSource attacksound; //sound when player attacks
+    [SerializeField] private AudioSource playerDyingSound; //sound when player dies
+    [SerializeField] private AudioSource jumpSound; //sound when player jump
+    public AudioSource playerHurt; //audio clip when player getting hurt
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             //make the player rigidbody have a upward velocity;
             thisChar.AddForce(new Vector2(0, jumpSpeed));
+            jumpSound.Play();
         }
 
         //transitioning back from the jumping animation to the idle when player is on ground
@@ -141,8 +146,9 @@ public class PlayerController : MonoBehaviour
         //if player dead animation is not currently playing
         if (!playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("PlayerDying"))
         {
-            //triggering player dying animation
+            //triggering player dying animation and sound
             playerAnimator.SetTrigger("isDead");
+            playerDyingSound.Play();
         }   
         
         //if player dead animation is playing
@@ -161,6 +167,7 @@ public class PlayerController : MonoBehaviour
         {
             //deploy kunai in the direction of the player facing
             GameObject kunaiInstance = (GameObject)Instantiate(kunaiPrefab, kunaiSpawnLocationR);
+            attacksound.Play();
             kunaiInstance.GetComponent<SpriteRenderer>().flipY = false;
             //destroy the instance after 1s
             Destroy(kunaiInstance.gameObject, 1f);

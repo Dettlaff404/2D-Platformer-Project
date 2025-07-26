@@ -16,6 +16,7 @@ public class TrapDamage : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameManagerScript.thisGameManagerScript.currentHealth -= amountOfDamage;
+            PlayerController.playerControllerScript.playerHurt.Play();
         }
     }
 

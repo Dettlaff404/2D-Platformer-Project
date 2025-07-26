@@ -28,6 +28,32 @@ public class GameManagerScript : MonoBehaviour
         {
             thisGameManagerScript = this;
         }
+        currentHealth = maxHealth; //resetting the health value of the player
+        scoreValue = 0; //resetting the player score value
+        
+
+
+
+        //setting UI screens
+        pauseScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
+        youWinScreen.SetActive(false);
+        pauseButton.SetActive(true);
+        playerHealthBar.SetActive(true);
+        playerScoreUI.SetActive(true);
+        
+
+    }
+
+    // Start is called before the Update of the first frame of the game
+    private void Start()
+    {
+        //starting the inputs,functions and animations of the game if its been paused on a previous menu
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+            isPaused = false;
+        }
 
         //if the player had chosem to load previos game data from a menu option before, loading saved data as current data
         //data which loaded here are player health, score, and position
@@ -45,34 +71,7 @@ public class GameManagerScript : MonoBehaviour
             currentHealth = PlayerPrefs.GetFloat("Health");
             scoreValue = PlayerPrefs.GetInt("Score");
         }
-        else
-        {
-            currentHealth = maxHealth; //resetting the health value of the player
-            scoreValue = 0; //resetting the player score value
-        }
-
-        //starting the inputs,functions and animations of the game if its been paused on a previous menu
-        if (Time.timeScale == 0f)
-        {
-            Time.timeScale = 1f;
-            isPaused = false;
-        }
-
-        //setting UI screens
-        pauseScreen.SetActive(false);
-        gameOverScreen.SetActive(false);
-        youWinScreen.SetActive(false);
-        pauseButton.SetActive(true);
-        playerHealthBar.SetActive(true);
-        playerScoreUI.SetActive(true);
         
-
-    }
-
-    // Start is called before the Update of the first frame of the game
-    private void Start()
-    {
-
     }
 
     // Update is called once per frame

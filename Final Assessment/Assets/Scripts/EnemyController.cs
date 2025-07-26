@@ -25,10 +25,14 @@ public class EnemyController : MonoBehaviour
     private float enemyAttackCD; //attack countdown timer
     private bool directionChanged = false; //boolian to check whether the sprite direction has changed while triggering the attack animation
 
+    [SerializeField] private AudioSource enemyDyingSound; //soundclip to play when enemy dies
+    private bool dead = false; //to refer if player died
+
 
     // Start is called before the first frame update
     void Start()
     {
+        
         enemyAniController = this.GetComponent<Animator>(); //assigning the animator component
 
         //recording the starting position of the enemy for later conditions
@@ -73,18 +77,30 @@ public class EnemyController : MonoBehaviour
                     moveRight = true;
                     enemySprite.flipX = false;
                 }
-            }
+            } 
+        }
 
-            //if enemy health is less than or equals to 0
-            if (enemyCurrentHealth <= 0)
+        //if enemy health is less than or equals to 0
+        if (enemyCurrentHealth <= 0)
+        {
+            if ((!enemyDyingSound.isPlaying) && (!dead))
             {
-                //playing the enemy dying animation
+                //playing the enemy dying animation and sound
                 enemyAniController.SetTrigger("EnemyDie");
+                enemyDyingSound.Play();
+                dead = true;
                 //destroy this game object after 1s
                 Destroy(this.gameObject, 1f);
                 //increasing the player score value
                 GameManagerScript.thisGameManagerScript.scoreValue += killScore;
-            }  
+            }
+            
+        }
+
+        //stop enemy from attacking if the player health is 0
+        if (GameManagerScript.thisGameManagerScript.currentHealth <= 0)
+        {
+            isAttack = false;
         }
 
         //if enemy is attacking
@@ -104,6 +120,7 @@ public class EnemyController : MonoBehaviour
             if (enemyAttackCD == 0)
             {
                 GameManagerScript.thisGameManagerScript.currentHealth -= enemyDamage;
+                PlayerController.playerControllerScript.playerHurt.Play();
                 enemyAttackCD = attackReset;
             }
         }
